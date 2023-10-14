@@ -1,6 +1,8 @@
 import os
 from tkinter import *
+from tkinter import ttk
 from pytube import YouTube
+from PIL import Image, ImageDraw
 
 # Función para descargar videos de YouTube en formato MP4
 def descargar_videos():
@@ -33,24 +35,73 @@ def descargar_videos():
             status_text.see("end")  # Hacer scroll para mostrar el texto más reciente
             status_text.config(state="disabled")
 
+# Función para crear un fondo degradado con Pillow
+def crear_fondo_degradado(width, height):
+    fondo = Image.new('RGB', (width, height))
+    draw = ImageDraw.Draw(fondo)
+
+    start_color = (0x33, 0x33, 0x33)  # Color #333333
+    end_color = (0x1a, 0x2e, 0x38)  # Color #1a2e38
+
+    for y in range(height):
+        # Calcular el color en función de la posición vertical
+        r = start_color[0] + (end_color[0] - start_color[0]) * y // height
+        g = start_color[1] + (end_color[1] - start_color[1]) * y // height
+        b = start_color[2] + (end_color[2] - start_color[2]) * y // height
+        color = (r, g, b)
+        draw.line([(0, y), (width, y)], fill=color)
+
+    return fondo
+
+# Guardar el fondo degradado en un archivo
+def guardar_fondo_degradado(fondo_degradado, filename):
+    fondo_degradado.save(filename, "PNG")
+
 # Configuración de la ventana
 root = Tk()
 root.title("Descargador de Videos de YouTube")
-root.geometry("400x300")
+root.geometry("800x400")
+# Impedir que la ventana sea redimensionable
+root.resizable(False, False)  # (Ancho, Alto)
+
+# Crear un fondo degradado de 800x400 con Pillow
+fondo_degradado = crear_fondo_degradado(800, 400)
+
+# Guardar el fondo degradado en un archivo PNG
+guardar_fondo_degradado(fondo_degradado, "background.png")
+
+# Cargar el fondo desde el archivo en un Canvas
+photo = PhotoImage(file="background.png")
+background_canvas = Canvas(root, width=800, height=400)
+background_canvas.create_image(0, 0, anchor="nw", image=photo)
+background_canvas.place(x=0, y=0, relwidth=1, relheight=1)  # Coloca el Canvas en toda la ventana
+
+# Crear un estilo personalizado con ttk
+style = ttk.Style()
+style.configure("TButton", padding=10, font=("Helvetica", 12))
+style.configure("TLabel", font=("Helvetica", 12))
+style.configure("TText", font=("Helvetica", 12))
 
 # Área de texto para ingresar las URLs
-url_label = Label(root, text="URLs de los videos (una por línea):")
-url_label.pack(pady=10)
-url_entry = Text(root, height=5, width=40)
-url_entry.pack()
+url_label = Label(root, text="URLs de los videos (una por línea):",
+                  fg="#cececa", bg="#333333", relief="groove", borderwidth=0.6)
+url_label.place(x=10, y=10)  # Ajusta la posición a tu preferencia
+
+url_entry = Text(root, height=12.5, width=85, bg="#2e4041", fg="white")
+url_entry.place(x=10, y=40)  # Ajusta la posición a tu preferencia
 
 # Botón para iniciar la descarga
-download_button = Button(root, text="Iniciar Descarga", command=descargar_videos)
-download_button.pack(pady=10)
+dwnd = PhotoImage(file='download.png')
+dwnd = dwnd.subsample(10)
+download_button = Button(root, image=dwnd, command=descargar_videos,
+                         borderwidth=0, background="#2e4041", relief="flat",
+                         activebackground='#404c48', activeforeground='white')
+download_button.place(x=720, y=120)  # Ajusta la posición a tu preferencia
 
 # Área de texto para mostrar el historial de descargas (solo de lectura)
-status_text = Text(root, height=10, width=40, state="disabled")
-status_text.pack()
+status_text = Text(root, height=7, width=85, state="disabled",
+                   font=("Helvetica", 12), bg="#2e4041", fg="white")
+status_text.place(x=10, y=260)  # Ajusta la posición a tu preferencia
 
 # Iniciar la aplicación
 root.mainloop()
