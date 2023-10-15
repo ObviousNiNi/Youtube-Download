@@ -1,8 +1,10 @@
 import os
 from tkinter import *
-from tkinter import ttk
 from pytube import YouTube
 from PIL import Image, ImageDraw
+from ttkthemes import ThemedStyle
+
+
 
 # Función para descargar videos de YouTube en formato MP4
 def descargar_videos():
@@ -57,12 +59,16 @@ def crear_fondo_degradado(width, height):
 def guardar_fondo_degradado(fondo_degradado, filename):
     fondo_degradado.save(filename, "PNG")
 
+
+
 # Configuración de la ventana
 root = Tk()
 root.title("Descargador de Videos de YouTube")
 root.geometry("800x400")
 # Impedir que la ventana sea redimensionable
 root.resizable(False, False)  # (Ancho, Alto)
+
+
 
 # Crear un fondo degradado de 800x400 con Pillow
 fondo_degradado = crear_fondo_degradado(800, 400)
@@ -76,19 +82,18 @@ background_canvas = Canvas(root, width=800, height=400)
 background_canvas.create_image(0, 0, anchor="nw", image=photo)
 background_canvas.place(x=0, y=0, relwidth=1, relheight=1)  # Coloca el Canvas en toda la ventana
 
-# Crear un estilo personalizado con ttk
-style = ttk.Style()
-style.configure("TButton", padding=10, font=("Helvetica", 12))
-style.configure("TLabel", font=("Helvetica", 12))
-style.configure("TText", font=("Helvetica", 12))
+style = ThemedStyle(root)
+style.set_theme("equilux")
+
 
 # Área de texto para ingresar las URLs
 url_label = Label(root, text="URLs de los videos (una por línea):",
                   fg="#cececa", bg="#333333", relief="groove", borderwidth=0.6)
 url_label.place(x=10, y=10)  # Ajusta la posición a tu preferencia
 
-url_entry = Text(root, height=12.5, width=85, bg="#2e4041", fg="white")
+url_entry = Text(root, height=12.5, width=85, bg="#2e4041", fg="#cececa")
 url_entry.place(x=10, y=40)  # Ajusta la posición a tu preferencia
+
 
 # Botón para iniciar la descarga
 dwnd = PhotoImage(file='download.png')
@@ -100,8 +105,10 @@ download_button.place(x=720, y=120)  # Ajusta la posición a tu preferencia
 
 # Área de texto para mostrar el historial de descargas (solo de lectura)
 status_text = Text(root, height=7, width=85, state="disabled",
-                   font=("Helvetica", 12), bg="#2e4041", fg="white")
+                   font=("Consolas", 12), bg="#2e4041", fg="#cececa")
 status_text.place(x=10, y=260)  # Ajusta la posición a tu preferencia
+
+
 
 # Iniciar la aplicación
 root.mainloop()
