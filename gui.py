@@ -32,6 +32,8 @@ root = Tk()
 root.title("Descargador de Videos de YouTube")
 root.geometry("800x400")
 root.resizable(False, False)
+root.iconbitmap("imgs/youtube-play-button-outlined-social-symbol_icon-icons.com_74040.ico")
+
 
 # Crear un fondo degradado y guardarlo en un archivo
 fondo_degradado = crear_fondo_degradado(800, 400)
@@ -57,7 +59,7 @@ url_entry = Text(root, height=12.5, width=85, bg="#2e4041", fg="#cececa")
 url_entry.place(x=10, y=40)
 
 # Botón para iniciar la descarga
-dwnd = PhotoImage(file='mp4.png')
+dwnd = PhotoImage(file='imgs/mp4.png')
 dwnd = dwnd.subsample(10)
 download_button = Button(root, image=dwnd, command=lambda: descargar_videos(url_entry, status_text),
                          borderwidth=0, background="#2e4041", relief="flat",
@@ -65,7 +67,7 @@ download_button = Button(root, image=dwnd, command=lambda: descargar_videos(url_
 download_button.place(x=705, y=80)
 
 # Botón para iniciar la descarga mp3
-dwndmp3 = PhotoImage(file='mp3.png')
+dwndmp3 = PhotoImage(file='imgs/mp3.png')
 dwndmp3 = dwndmp3.subsample(6)
 downloadmp3_button = Button(root, image=dwndmp3, command=lambda: [set_download_as_mp3(True),
                                                                   descargar_videos(url_entry, status_text)],

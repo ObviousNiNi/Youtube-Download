@@ -5,25 +5,30 @@ Este proyecto te permite descargar videos de YouTube de una manera sencilla util
 ## Cómo funciona
 
 El proyecto consta de dos partes principales: la interfaz gráfica de usuario (GUI) y la lógica de descarga.
+![Texto alternativo](imgs/Captura de pantalla 2023-10-14 215152.png)
 
 ### Interfaz gráfica de usuario (GUI)
 
 La interfaz gráfica te proporciona una forma amigable de interactuar con el programa. Puedes ingresar las URLs de los videos en un campo de texto y utilizar botones para iniciar las descargas. Además, se proporciona una sección donde podrás ver el historial de tus descargas (se reinicia al cerrar el programa).
+![Texto alternativo1](imgs/Captura de pantalla 2023-10-14 215357.png)
 
 ### Lógica de descarga
 
 La lógica de descarga se encarga de procesar las URLs proporcionadas y descargar los videos correspondientes desde YouTube. El programa utiliza la biblioteca `pytube` para obtener la mejor calidad de video disponible para cada URL y guarda los archivos descargados en una carpeta llamada "Descargas" en tu computadora. Si deseas, también puedes configurar el programa para descargar los videos como archivos MP3.
+![Texto alternativo2](imgs/Captura de pantalla 2023-10-14 215521.png)
 
 ## Requisitos previos
 
 Antes de utilizar este proyecto, asegúrate de tener Python instalado en tu computadora. También necesitarás instalar las siguientes bibliotecas:
 
+- tkinter: Para la interfaz gráfica
 - pytube: Para la descarga de videos de YouTube
 - Pillow: Para la creación de elementos gráficos
 
 Puedes instalar estas bibliotecas utilizando `pip`:
 
 ```bash
+pip install tkinter
 pip install pytube Pillow
 pip install ttkthemes
 pip install moviepy
