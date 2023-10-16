@@ -2,6 +2,8 @@ from tkinter import *
 from PIL import Image, ImageDraw
 from ttkthemes import ThemedStyle
 from descarga import descargar_videos  # Importa la función de descarga desde descarga.py
+from descarga import set_download_as_mp3  # Importa la función de descarga mp3 desde descarga.py
+
 
 # Función para crear un fondo degradado usando la biblioteca Pillow
 def crear_fondo_degradado(width, height):
@@ -21,7 +23,7 @@ def crear_fondo_degradado(width, height):
 
     return fondo
 
-# Función para guardar el fondo degradado en un archivo
+#  Función para guardar el fondo degradado en un archivo
 def guardar_fondo_degradado(fondo_degradado, filename):
     fondo_degradado.save(filename, "PNG")
 
@@ -55,17 +57,27 @@ url_entry = Text(root, height=12.5, width=85, bg="#2e4041", fg="#cececa")
 url_entry.place(x=10, y=40)
 
 # Botón para iniciar la descarga
-dwnd = PhotoImage(file='download.png')
+dwnd = PhotoImage(file='mp4.png')
 dwnd = dwnd.subsample(10)
 download_button = Button(root, image=dwnd, command=lambda: descargar_videos(url_entry, status_text),
                          borderwidth=0, background="#2e4041", relief="flat",
                          activebackground='#404c48', activeforeground='white')
-download_button.place(x=720, y=120)
+download_button.place(x=705, y=80)
+
+# Botón para iniciar la descarga mp3
+dwndmp3 = PhotoImage(file='mp3.png')
+dwndmp3 = dwndmp3.subsample(6)
+downloadmp3_button = Button(root, image=dwndmp3, command=lambda: [set_download_as_mp3(True),
+                                                                  descargar_videos(url_entry, status_text)],
+                         borderwidth=0, background="#2e4041", relief="flat",
+                         activebackground='#404c48', activeforeground='white')
+downloadmp3_button.place(x=705, y=150)
 
 # Área de texto para mostrar el historial de descargas (solo de lectura)
 status_text = Text(root, height=7, width=85, state="disabled",
                    font=("Consolas", 12), bg="#2e4041", fg="#cececa")
 status_text.place(x=10, y=260)
+
 
 # Iniciar la aplicación y abrir la ventana principal
 root.mainloop()
